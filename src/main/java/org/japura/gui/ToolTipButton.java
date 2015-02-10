@@ -41,7 +41,7 @@ import java.awt.geom.Rectangle2D;
  */
 public class ToolTipButton extends JPanel {
 
-  private static final long serialVersionUID = 4L;
+  private static final long serialVersionUID = 5L;
   public final static Color DEFAULT_BACKGROUND = new Color(255, 255, 220);
   private Color borderColor = Color.BLACK;
   private Color toolTipBackground;
@@ -54,6 +54,9 @@ public class ToolTipButton extends JPanel {
   private String text;
   private ToolTipButtonTimer timer;
   private JPopupMenu popup;
+  private Rectangle2D popupBounds;
+  private JComponent extraComponent;
+  private ToolTipButtonAnchor extraComponentAnchor;
 
   /**
    * Constructor
@@ -61,7 +64,7 @@ public class ToolTipButton extends JPanel {
    * @param image {@link Icon} - image for tooltip button
    */
   public ToolTipButton(Icon image) {
-    this(image, null, null, DEFAULT_BACKGROUND);
+    this(image, null, null);
   }
 
   /**
@@ -71,18 +74,18 @@ public class ToolTipButton extends JPanel {
    * @param tooltip {@link String} - tooltip text
    */
   public ToolTipButton(Icon image, String tooltip) {
-    this(image, null, tooltip, DEFAULT_BACKGROUND);
+    this(image, null, tooltip);
   }
 
   /**
    * Constructor
-   * 
+   *
    * @param image {@link Icon} - image for tooltip button
    * @param imageMouseOver {@link Icon} - image for mouse over tooltip button
    * @param tooltip {@link String} - tooltip text
    */
   public ToolTipButton(Icon image, Icon imageMouseOver, String tooltip) {
-    this(image, imageMouseOver, tooltip, DEFAULT_BACKGROUND);
+    this(image, imageMouseOver, tooltip, null, null);
   }
 
   /**
@@ -91,10 +94,15 @@ public class ToolTipButton extends JPanel {
    * @param image {@link Icon} - image for tooltip button
    * @param imageMouseOver {@link Icon} - image for mouse over tooltip button
    * @param tooltip {@link String} - tooltip text
-   * @param toolTipBackground {@link Color} - tooltip background
+   * @param extraComponent an extra component for the hint
+   * @param extraComponentAnchor the BordeLayout constraint for the extra
+   *        component
    */
   public ToolTipButton(Icon image, Icon imageMouseOver, String tooltip,
-    Color toolTipBackground) {
+    JComponent extraComponent, ToolTipButtonAnchor extraComponentAnchor) {
+    this.extraComponent = extraComponent;
+    this.extraComponentAnchor = extraComponentAnchor;
+
     setTooltipMargin(null);
     setLayout(new GridBagLayout());
 
@@ -103,7 +111,7 @@ public class ToolTipButton extends JPanel {
 
     this.image = image;
     this.imageMouseOver = imageMouseOver;
-    this.toolTipBackground = toolTipBackground;
+    this.toolTipBackground = ToolTipButton.DEFAULT_BACKGROUND;
     setText(tooltip);
     setOpaque(false);
 
@@ -118,7 +126,7 @@ public class ToolTipButton extends JPanel {
       @Override
       public void mouseClicked(MouseEvent e) {
         timer.stop();
-        showHint();
+        showTooltip();
       }
 
       @Override
@@ -140,13 +148,6 @@ public class ToolTipButton extends JPanel {
         }
       });
     }
-  }
-
-  private Rectangle2D getScreeenBoundsFor(JComponent component) {
-    Point point = component.getLocationOnScreen();
-    Dimension dim = component.getSize();
-    return new Rectangle2D.Double(point.getX(), point.getY(), dim.getWidth(),
-      dim.getHeight());
   }
 
   public String getText() {
@@ -250,11 +251,26 @@ public class ToolTipButton extends JPanel {
     this.toolTipWrapWidth = Math.max(200, toolTipWrapWidth);
   }
 
+  private void tryDisposeTooltip() {
+    if (popup != null) {
+      if (popup.isShowing()) {
+        Point cursorLocation = MouseInfo.getPointerInfo().getLocation();
+        if (popupBounds.contains(cursorLocation) == false) {
+          disposeTooltip();
+        }
+      }
+      else {
+        disposeTooltip();
+      }
+    }
+  }
+
   /**
    * Dispose the tooltip
    */
-  private void disposeWindow() {
+  public void disposeTooltip() {
     if (popup != null) {
+      timer.stop();
       popup.setVisible(false);
       popup = null;
     }
@@ -263,33 +279,59 @@ public class ToolTipButton extends JPanel {
   /**
    * Show the tooltip.
    */
-  private void showHint() {
+  private void showTooltip() {
     Wrap tooltipLabel = new Wrap(toolTipWrapWidth);
     tooltipLabel.setForeground(getForeground());
     tooltipLabel.setFont(ToolTipButton.this.getFont());
     tooltipLabel.setText(text);
+    tooltipLabel.setOpaque(false);
+
+    JPanel panel = new JPanel();
+    panel.setBackground(toolTipBackground);
+    panel.setLayout(new BorderLayout());
+    panel.add(tooltipLabel, BorderLayout.CENTER);
+
+    if (extraComponent != null && extraComponentAnchor != null) {
+      if (extraComponentAnchor.equals(ToolTipButtonAnchor.SOUTH)) {
+        panel.add(extraComponent, BorderLayout.SOUTH);
+      }
+      else if (extraComponentAnchor.equals(ToolTipButtonAnchor.NORTH)) {
+        panel.add(extraComponent, BorderLayout.NORTH);
+      }
+      else if (extraComponentAnchor.equals(ToolTipButtonAnchor.EAST)) {
+        panel.add(extraComponent, BorderLayout.EAST);
+      }
+      else if (extraComponentAnchor.equals(ToolTipButtonAnchor.WEST)) {
+        panel.add(extraComponent, BorderLayout.WEST);
+      }
+    }
 
     Border out = BorderFactory.createLineBorder(borderColor, borderThickness);
     Border in =
       BorderFactory.createEmptyBorder(margin.top, margin.left, margin.bottom,
         margin.right);
     Border border = BorderFactory.createCompoundBorder(out, in);
-    tooltipLabel.setBorder(border);
-    tooltipLabel.setBackground(toolTipBackground);
-    tooltipLabel.setOpaque(true);
+    panel.setBorder(border);
 
     popup = new JPopupMenu();
     popup.setBorder(BorderFactory.createEmptyBorder());
-    popup.add(tooltipLabel);
+    popup.add(panel);
 
-    tooltipLabel.addMouseListener(new MouseAdapter() {
+    popup.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseExited(MouseEvent e) {
-        disposeWindow();
+        tryDisposeTooltip();
       }
     });
 
+    popup.pack();
     popup.show(ToolTipButton.this, 0, getHeight());
+
+    Point point = popup.getLocationOnScreen();
+    Dimension dim = popup.getSize();
+    popupBounds =
+      new Rectangle2D.Double(point.getX(), point.getY(), dim.getWidth(),
+        dim.getHeight());
   }
 
   private static class Wrap extends JTextPane {
@@ -396,23 +438,19 @@ public class ToolTipButton extends JPanel {
     @Override
     public void actionPerformed(ActionEvent e) {
       if (nextAction.equals(NextAction.SHOW)) {
-        showHint();
+        showTooltip();
       }
       else if (nextAction.equals(NextAction.DISPOSE)) {
-        if (popup != null) {
-          if (popup.isShowing()) {
-            Point cursorLocation = MouseInfo.getPointerInfo().getLocation();
-            Rectangle2D popupBounds = getScreeenBoundsFor(popup);
-            if (popupBounds.contains(cursorLocation) == false) {
-              disposeWindow();
-            }
-          }
-          else {
-            disposeWindow();
-          }
-        }
+        tryDisposeTooltip();
       }
     }
+  }
+
+  public static enum ToolTipButtonAnchor {
+    SOUTH,
+    NORTH,
+    EAST,
+    WEST;
   }
 
 }

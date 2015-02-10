@@ -16,12 +16,12 @@ public class Example1 {
 
     Icon icon = new ImageIcon(url);
     String text = "Visit Japura project at http://www.japura.org";
-    ToolTipButton ttb = new ToolTipButton(icon, text);
+    ToolTipButton toolTipButton = new ToolTipButton(icon, text);
 
     JPanel panel = new JPanel();
     panel.setBackground(Color.WHITE);
     panel.setLayout(new MigLayout());
-    panel.add(ttb);
+    panel.add(toolTipButton);
 
     ExampleUtil.showFrame(panel, 600, 200);
   }
