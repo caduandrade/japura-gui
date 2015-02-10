@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<properties>
+		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+	</properties>
+
+	<groupId>org.japura</groupId>
+	<artifactId>japura-gui</artifactId>
+	<version>7.0.0</version>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>org.japura</groupId>
+		<artifactId>japura-parent</artifactId>
+		<version>7.0.1</version>
+	</parent>
+
+	<name>Japura - GUI</name>
+	<description>Japura is a Java Swing project. It is an application framework and collection of components.</description>
+	<url>http://www.japura.org</url>
+
+	<licenses>
+		<license>
+			<name>The GNU Lesser General Public License, version 3.0 (LGPL-3.0)</name>
+			<url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+ <connection>scm:git:git@github.com:caduandrade/japura-gui.git</connection>
+        <url>scm:git:git@github.com:caduandrade/japura-gui.git</url>
+        <developerConnection>scm:git:git@github.com:caduandrade/japura-gui.git</developerConnection>
+        <tag>HEAD</tag>	
+</scm>
+
+	<developers>
+		<developer>
+			<id>caduandrade</id>
+			<name>Cadu Andrade</name>
+			<email>cadu@japura.org</email>
+		</developer>
+	</developers>
+
+	<distributionManagement>
+		<repository>
+			<id>sonatype-nexus-staging</id>
+			<name>Sonatype Repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+		</repository>
+		<snapshotRepository>
+			<id>sonatype-nexus-snapshots</id>
+			<name>Sonatype Repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.japura</groupId>
+			<artifactId>japura-util</artifactId>
+			<version>2.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.miglayout</groupId>
+			<artifactId>miglayout-swing</artifactId>
+			<version>4.2</version>
+		</dependency>
+
+
+	</dependencies>
+
+</project>
