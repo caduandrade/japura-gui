@@ -10,7 +10,7 @@ import java.awt.Font;
 import java.awt.Insets;
 
 /**
- * Copyright (C) 2014 Carlos Eduardo Leite de Andrade
+ * Copyright (C) 2014-2015 Carlos Eduardo Leite de Andrade
  * <P>
  * This library is free software: you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -156,6 +156,10 @@ public class TitleBar extends PaintedPanel {
 
   public void setTitle(String title) {
     getTitleLabel().setText(title);
+  }
+    
+  public String getTitle() {
+    return getTitleLabel().getText();
   }
 
   public void setTitleForeground(Color color) {

@@ -250,6 +250,14 @@ public class TitlePanel extends JComponent {
     getTitleBar().getTitleLabel().setFont(font);
   }
 
+  public void setTitle(String title) {
+    getTitleBar().setTitle(title);
+  }
+
+  public String getTitle() {
+    return getTitleBar().getTitle();
+  }
+
   public void setTitleForeground(Color color) {
     getTitleBar().setForeground(color);
   }
