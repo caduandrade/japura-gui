@@ -7,7 +7,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 
 /**
- * Copyright (C) 2010-2014 Carlos Eduardo Leite de Andrade
+ * Copyright (C) 2010-2015 Carlos Eduardo Leite de Andrade
  * <P>
  * This library is free software: you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -249,4 +249,25 @@ public class TitlePanel extends JComponent {
   public void setFont(Font font) {
     getTitleBar().getTitleLabel().setFont(font);
   }
+
+  public void setTitleForeground(Color color) {
+    getTitleBar().setForeground(color);
+  }
+
+  public Color getTitleForeground() {
+    return getTitleBar().getForeground();
+  }
+
+  public void setTitleBackground(Color color) {
+    getTitleBar().setTitleBackground(color);
+  }
+
+  public void setTitleBackground(Gradient gradient) {
+    getTitleBar().setTitleBackground(gradient);
+  }
+
+  public Object getTitleBackground() {
+    return getTitleBar().getTitleBackground();
+  }
+    
 }
