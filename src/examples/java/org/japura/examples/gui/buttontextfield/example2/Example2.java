@@ -1,7 +1,7 @@
 package org.japura.examples.gui.buttontextfield.example2;
 
 import org.japura.examples.gui.AbstractExample;
-import org.japura.examples.gui.ExampleUtil;
+import org.japura.examples.gui.ExampleImages;
 import org.japura.gui.ButtonTextField;
 
 import java.awt.Component;
@@ -13,8 +13,8 @@ public class Example2 extends AbstractExample {
 
   @Override
   protected Component buildExampleComponent() {
-    URL urlSortIncrease = ExampleUtil.SORT_INCREASE_IMAGE;
-    URL urlSortDecrease = ExampleUtil.SORT_DECREASE_IMAGE;
+    URL urlSortIncrease = ExampleImages.SORT_INCREASE_IMAGE;
+    URL urlSortDecrease = ExampleImages.SORT_DECREASE_IMAGE;
 
     ActionListener actionListener = new ActionListener() {
       @Override

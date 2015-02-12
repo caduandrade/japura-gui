@@ -1,7 +1,7 @@
 package org.japura.examples.gui.buttontextfield.example4;
 
 import org.japura.examples.gui.AbstractExample;
-import org.japura.examples.gui.ExampleUtil;
+import org.japura.examples.gui.ExampleImages;
 import org.japura.gui.ButtonTextField;
 
 import javax.swing.JPasswordField;
@@ -14,7 +14,7 @@ public class Example4 extends AbstractExample {
 
   @Override
   protected Component buildExampleComponent() {
-    URL urlKey = ExampleUtil.KEY_IMAGE;
+    URL urlKey = ExampleImages.KEY_IMAGE;
 
     ActionListener actionListener = new ActionListener() {
       @Override

@@ -1,28 +1,29 @@
 package org.japura.examples.gui.tooltip.example1;
 
-import net.miginfocom.swing.MigLayout;
-import org.japura.examples.gui.ExampleUtil;
+import org.japura.examples.gui.AbstractExample;
+import org.japura.examples.gui.ExampleImages;
 import org.japura.gui.ToolTipButton;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-import java.awt.Color;
+import java.awt.Component;
 import java.net.URL;
 
-public class Example1 {
-  public static void main(String args[]) {
-    URL url = ExampleUtil.QUESTION_IMAGE;
+public class Example1 extends AbstractExample {
+
+  @Override
+  protected Component buildExampleComponent() {
+    URL url = ExampleImages.QUESTION_IMAGE;
 
     Icon icon = new ImageIcon(url);
     String text = "Visit Japura project at http://www.japura.org";
     ToolTipButton toolTipButton = new ToolTipButton(icon, text);
 
-    JPanel panel = new JPanel();
-    panel.setBackground(Color.WHITE);
-    panel.setLayout(new MigLayout());
-    panel.add(toolTipButton);
+    return toolTipButton;
+  }
 
-    ExampleUtil.showFrame(panel, 600, 200);
+  public static void main(String args[]) {
+    Example1 example = new Example1();
+    example.runExample();
   }
 }

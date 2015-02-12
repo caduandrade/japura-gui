@@ -1,7 +1,7 @@
 package org.japura.examples.gui.buttontextfield.example3;
 
 import org.japura.examples.gui.AbstractExample;
-import org.japura.examples.gui.ExampleUtil;
+import org.japura.examples.gui.ExampleImages;
 import org.japura.gui.ButtonTextField;
 
 import java.awt.Component;
@@ -13,7 +13,7 @@ public class Example3 extends AbstractExample {
 
   @Override
   protected Component buildExampleComponent() {
-    URL urlFind = ExampleUtil.FIND_IMAGE;
+    URL urlFind = ExampleImages.FIND_IMAGE;
 
     ActionListener actionListener = new ActionListener() {
       @Override
