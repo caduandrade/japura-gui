@@ -2,6 +2,8 @@ package org.japura.examples.gui;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -52,6 +54,30 @@ public abstract class AbstractExample {
     JPanel panel = getRootPanel();
     getFrame().add(panel);
     show();
+  }
+
+  public void initializeNimbus() {
+    try {
+      for (UIManager.LookAndFeelInfo info : UIManager
+        .getInstalledLookAndFeels()) {
+        if ("Nimbus".equals(info.getName())) {
+          UIManager.setLookAndFeel(info.getClassName());
+          break;
+        }
+      }
+    }
+    catch (UnsupportedLookAndFeelException e) {
+      // handle exception
+    }
+    catch (ClassNotFoundException e) {
+      // handle exception
+    }
+    catch (InstantiationException e) {
+      // handle exception
+    }
+    catch (IllegalAccessException e) {
+      // handle exception
+    }
   }
 
 }
