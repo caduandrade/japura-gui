@@ -1,4 +1,4 @@
-package org.japura.examples.gui.checkcombobox;
+package org.japura.examples.gui.checkcombobox.example9;
 
 import org.japura.gui.i18n.DefaultGUIHandlerString;
 import org.japura.gui.i18n.GUIStringKeys;

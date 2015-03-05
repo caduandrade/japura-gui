@@ -1,4 +1,4 @@
-package org.japura.examples.gui.calendarfield;
+package org.japura.examples.gui.calendarfield.example4;
 
 import org.japura.examples.gui.AbstractExample;
 import org.japura.gui.calendar.CalendarField;

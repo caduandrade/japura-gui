@@ -1,4 +1,4 @@
-package org.japura.examples.gui.checkcombobox;
+package org.japura.examples.gui.checkcombobox.example4;
 
 import org.japura.examples.Country;
 import org.japura.examples.gui.AbstractExample;

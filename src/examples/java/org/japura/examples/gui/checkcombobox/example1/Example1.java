@@ -1,4 +1,4 @@
-package org.japura.examples.gui.checkcombobox;
+package org.japura.examples.gui.checkcombobox.example1;
 
 import org.japura.examples.Colors;
 import org.japura.examples.gui.AbstractExample;
