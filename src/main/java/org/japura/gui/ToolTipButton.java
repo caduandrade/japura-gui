@@ -41,7 +41,7 @@ import java.awt.geom.Rectangle2D;
  */
 public class ToolTipButton extends JPanel {
 
-  private static final long serialVersionUID = 5L;
+  private static final long serialVersionUID = 6L;
   public final static Color DEFAULT_BACKGROUND = new Color(255, 255, 220);
   private Color borderColor = Color.BLACK;
   private Color toolTipBackground;
@@ -346,8 +346,7 @@ public class ToolTipButton extends JPanel {
       setContentType("text/html");
       setOpaque(false);
       setEditable(false);
-      setEnabled(false);
-      setDisabledTextColor(Color.BLACK);
+      setHighlighter(null);
     }
 
     private void setHTMLFont(Font font) {
