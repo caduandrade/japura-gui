@@ -14,5 +14,11 @@ public final class ExampleImages {
     .getResource("/images/sort_decrease.png");
   public static final URL SORT_INCREASE_IMAGE = ExampleImages.class
     .getResource("/images/sort_increase.png");
+  public static final URL BUY_IMAGE = ExampleImages.class
+    .getResource("/images/buy.png");
+  public static final URL REFRESH_IMAGE = ExampleImages.class
+    .getResource("/images/refresh.png");
+  public static final URL HELP_IMAGE = ExampleImages.class
+    .getResource("/images/help.png");
 
 }

@@ -30,7 +30,7 @@ import java.awt.*;
  */
 public class TitlePanel extends JComponent {
 
-  private static final long serialVersionUID = 2L;
+  private static final long serialVersionUID = 4L;
 
   private TitleBar titleBar;
   private JPanel innerPanel;
@@ -75,11 +75,32 @@ public class TitlePanel extends JComponent {
     this.innerPanel.add(contentContainer, "grow");
 
     super.add(innerPanel);
-    super.add(this.titleIcon);
+    if (this.titleIcon != null) {
+      super.add(this.titleIcon);
+    }
 
     setOpaque(false);
 
     updateZOrders();
+  }
+
+  @Override
+  public Dimension getPreferredSize() {
+    if (isPreferredSizeSet()) {
+      return super.getPreferredSize();
+    }
+
+    Dimension dim = this.innerPanel.getPreferredSize();
+
+    if (this.titleIcon != null) {
+      int iconHeight = this.titleIcon.getPreferredSize().height;
+      Insets insets = this.innerPanel.getInsets();
+      int yBase = getTitleBar().getIconBase().getY();
+      int yBaseToTop = yBase + insets.top;
+      dim.height += Math.max(0, iconHeight - yBaseToTop);
+    }
+
+    return dim;
   }
 
   public TitleBar getTitleBar() {
@@ -87,37 +108,25 @@ public class TitlePanel extends JComponent {
   }
 
   @Override
-  public Dimension getPreferredSize() {
-    return new Dimension(200, 300);
-  }
-
-  @Override
   public void doLayout() {
-    Insets insets = this.innerPanel.getInsets();
-
-    Dimension innerPanelDim = this.innerPanel.getPreferredSize();
-
     if (this.titleIcon != null) {
-      int iconHeight = this.titleIcon.getPreferredSize().height;
-
+      Insets insets = this.innerPanel.getInsets();
       Dimension titleBarDim = getTitleBar().getPreferredSize();
-
-      int base = insets.top + titleBarDim.height;
-      base -= getTitleBar().getTitleMargin().bottom;
-
-      int y = 0;
-
-      if (iconHeight > base) {
-        y += (iconHeight - base);
-      }
-
-      this.titleIcon.setSize(this.titleIcon.getPreferredSize());
-      int x = insets.left;
-      this.titleIcon.setLocation(x, 0); // TODO rever esse x
-
+      int iconHeight = this.titleIcon.getPreferredSize().height;
+      int yBase = titleBarDim.height - getTitleBar().getTitleMargin().bottom;
+      int yBaseToTop = yBase + insets.top;
+      int outsideIconHeight = Math.max(0, (iconHeight - yBaseToTop));
+      int y = outsideIconHeight;
       int availableHeight = getHeight() - y;
       this.innerPanel.setSize(getWidth(), availableHeight);
       this.innerPanel.setLocation(0, y);
+      y =
+        y + insets.top
+          + (titleBarDim.height - getTitleBar().getTitleMargin().bottom)
+          - iconHeight;
+      this.titleIcon.setSize(this.titleIcon.getPreferredSize());
+      int x = insets.left + this.titleBar.getTitleMargin().left;
+      this.titleIcon.setLocation(x, y);
     }
     else {
       this.innerPanel.setSize(getWidth(), getHeight());
@@ -277,5 +286,5 @@ public class TitlePanel extends JComponent {
   public Object getTitleBackground() {
     return getTitleBar().getTitleBackground();
   }
-    
+
 }

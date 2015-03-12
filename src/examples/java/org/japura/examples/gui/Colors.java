@@ -1,4 +1,4 @@
-package org.japura.examples;
+package org.japura.examples.gui;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

@@ -1,7 +1,7 @@
-package org.japura.examples.gui.checklist;
+package org.japura.examples.gui.checklist.example3;
 
-import org.japura.examples.Country;
 import org.japura.examples.gui.AbstractExample;
+import org.japura.examples.gui.Country;
 import org.japura.gui.CheckList;
 import org.japura.gui.PopupMenuBuilder;
 import org.japura.gui.model.DefaultListCheckModel;

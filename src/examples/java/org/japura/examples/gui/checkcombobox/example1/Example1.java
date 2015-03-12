@@ -1,7 +1,7 @@
 package org.japura.examples.gui.checkcombobox.example1;
 
-import org.japura.examples.Colors;
 import org.japura.examples.gui.AbstractExample;
+import org.japura.examples.gui.Colors;
 import org.japura.gui.CheckComboBox;
 import org.japura.gui.model.ListCheckModel;
 

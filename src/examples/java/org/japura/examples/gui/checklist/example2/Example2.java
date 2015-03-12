@@ -1,17 +1,17 @@
-package org.japura.examples.gui.checklist;
+package org.japura.examples.gui.checklist.example2;
 
-import java.awt.Component;
-import java.util.List;
-
-import javax.swing.JScrollPane;
-
-import org.japura.examples.Country;
 import org.japura.examples.gui.AbstractExample;
+import org.japura.examples.gui.Country;
 import org.japura.gui.CheckList;
 import org.japura.gui.model.DefaultListCheckModel;
 import org.japura.gui.model.ListCheckModel;
+import org.japura.gui.renderer.CheckListRenderer;
 
-public class Example1 extends AbstractExample {
+import javax.swing.JScrollPane;
+import java.awt.Component;
+import java.util.List;
+
+public class Example2 extends AbstractExample {
 
   @Override
   protected Component buildExampleComponent() {
@@ -24,19 +24,21 @@ public class Example1 extends AbstractExample {
 	  model.addElement(country);
 	}
 
-	model.addCheck("Anguilla");
-	model.addCheck("Algeria");
-
-	model.addLock("Algeria");
-	model.addLock("Albania");
-
 	checkList.setModel(model);
+
+	checkList.setCellRenderer(new CheckListRenderer() {
+	  @Override
+	  public String getText(Object value) {
+		String country = (String) value;
+		return country.toUpperCase();
+	  }
+	});
 
 	return new JScrollPane(checkList);
   }
 
   public static void main(String[] args) {
-	Example1 example = new Example1();
+	Example2 example = new Example2();
 	example.runExample();
   }
 

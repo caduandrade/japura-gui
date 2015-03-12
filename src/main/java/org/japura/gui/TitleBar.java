@@ -5,7 +5,9 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Insets;
 
@@ -33,7 +35,7 @@ import java.awt.Insets;
  */
 public class TitleBar extends PaintedPanel {
 
-  private static final long serialVersionUID = 2L;
+  private static final long serialVersionUID = 4L;
 
   private static Object defaultTitleBackground = new Gradient(
     Gradient.TOP_TO_BOTTOM, new Color(160, 190, 255), new Color(240, 240, 255));
@@ -46,6 +48,7 @@ public class TitleBar extends PaintedPanel {
   private int gapBetweenTitleAndComponents = 15;
   private int gapBetweenComponents = 5;
   private JComponent[] titleComponents;
+  private JPanel iconBase;
 
   protected TitleBar(Icon icon, String title, JComponent[] titleComponents) {
     if (title == null || title.length() == 0) {
@@ -59,33 +62,38 @@ public class TitleBar extends PaintedPanel {
     }
 
     this.titleComponents = titleComponents;
+    if (this.titleComponents == null) {
+      this.titleComponents = new JComponent[0];
+    }
 
     if (icon != null) {
       this.iconWidth = icon.getIconWidth();
+      this.iconBase = new JPanel();
+      this.iconBase.setMinimumSize(new Dimension(icon.getIconWidth(), 1));
+      this.iconBase.setPreferredSize(new Dimension(icon.getIconWidth(), 1));
+      this.iconBase.setOpaque(false);
     }
 
     getTitleLabel().setText(title);
+
+    this.titleMargin = new Insets(5, 5, 5, 5);
+
     rebuild();
   }
 
   public void rebuild() {
     removeAll();
 
-    StringBuilder param1 = new StringBuilder();
-    param1.append("ins ");
-    param1.append(getTitleMargin().top);
-    param1.append(" ");
-    param1.append(getTitleMargin().left);
-    param1.append(" ");
-    param1.append(getTitleMargin().bottom);
-    param1.append(" ");
-    param1.append(getTitleMargin().right);
+    Insets margin = getTitleMargin();
 
     StringBuilder param2 = new StringBuilder();
-    if (this.iconWidth > 0) {
-      param2.append(this.iconWidth + this.gapBetweenIconAndTitle);
-    }
+    param2.append(margin.left);
     param2.append("[]");
+    if (this.iconWidth > 0) {
+      param2.append(this.gapBetweenIconAndTitle);
+      param2.append("[]");
+    }
+
     if (this.titleComponents.length > 0) {
       param2.append(this.gapBetweenTitleAndComponents);
       param2.append(":push");
@@ -96,17 +104,28 @@ public class TitleBar extends PaintedPanel {
         param2.append(this.gapBetweenComponents);
       }
     }
+    param2.append(margin.right);
 
-    String param3 = "align bottom";
+    StringBuilder param3 = new StringBuilder();
+    param3.append(margin.top);
+    param3.append("[align bottom]");
+    param3.append(margin.bottom);
 
-    setLayout(new MigLayout(param1.toString(), param2.toString(), param3));
+    setLayout(new MigLayout("", param2.toString(), param3.toString()));
 
+    if (this.iconWidth > 0) {
+      add(getIconBase());
+    }
     add(getTitleLabel());
     for (JComponent comp : this.titleComponents) {
       add(comp);
     }
 
     revalidate();
+  }
+
+  protected JPanel getIconBase() {
+    return iconBase;
   }
 
   /**
@@ -157,7 +176,7 @@ public class TitleBar extends PaintedPanel {
   public void setTitle(String title) {
     getTitleLabel().setText(title);
   }
-    
+
   public String getTitle() {
     return getTitleLabel().getText();
   }
@@ -204,13 +223,15 @@ public class TitleBar extends PaintedPanel {
 
   public void setTitleMargin(Insets titleMargin) {
     if (titleMargin == null) {
-      titleMargin = new Insets(0, 0, 0, 0);
+      this.titleMargin = new Insets(0, 0, 0, 0);
     }
-    int top = Math.max(titleMargin.top, 0);
-    int left = Math.max(titleMargin.left, 0);
-    int bottom = Math.max(titleMargin.bottom, 0);
-    int right = Math.max(titleMargin.right, 0);
-    this.titleMargin = new Insets(top, left, bottom, right);
+    else {
+      int top = Math.max(titleMargin.top, 0);
+      int left = Math.max(titleMargin.left, 0);
+      int bottom = Math.max(titleMargin.bottom, 0);
+      int right = Math.max(titleMargin.right, 0);
+      this.titleMargin = new Insets(top, left, bottom, right);
+    }
     rebuild();
   }
 
