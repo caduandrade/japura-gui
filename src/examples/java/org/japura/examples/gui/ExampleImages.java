@@ -20,5 +20,9 @@ public final class ExampleImages {
     .getResource("/images/refresh.png");
   public static final URL HELP_IMAGE = ExampleImages.class
     .getResource("/images/help.png");
+  public static final URL UP_IMAGE = ExampleImages.class
+    .getResource("/images/up.png");
+  public static final URL TOOLS_IMAGE = ExampleImages.class
+    .getResource("/images/tools.png");
 
 }
