@@ -15,25 +15,25 @@ public class Example3 extends AbstractExample {
 
   @Override
   protected Component buildExampleComponent() {
-		URL urlFind = ExampleImages.FIND_IMAGE;
+    URL urlFind = ExampleImages.FIND_IMAGE;
 
-      ImageIcon iconFind = new ImageIcon(urlFind);
+    ImageIcon iconFind = new ImageIcon(urlFind);
 
-	TitlePanel titlePanel = new TitlePanel(iconFind, "Search");
-	titlePanel.setTitleBackground(Color.LIGHT_GRAY);
-	titlePanel.setSeparatorColor(Color.BLACK);
-	titlePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    TitlePanel titlePanel = new TitlePanel(iconFind, "Search");
+    titlePanel.setTitleBackground(Color.LIGHT_GRAY);
+    titlePanel.setSeparatorColor(Color.BLACK);
+    titlePanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-	JTextField field = new JTextField(15);
-	field.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
-	titlePanel.add(field);
+    JTextField field = new JTextField(15);
+    field.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+    titlePanel.add(field);
 
-	return titlePanel;
+    return titlePanel;
   }
 
   public static void main(String[] args) {
-	Example3 example = new Example3();
-	example.runExample();
+    Example3 example = new Example3();
+    example.runExample();
   }
 
 }
