@@ -252,6 +252,7 @@ public abstract class AbstractComboBox extends JComponent{
 	  if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 		AbstractComboBox.this.setPopupVisible(true);
 	  }
+	  super.processKeyEvent(e);
 	}
   }
 
