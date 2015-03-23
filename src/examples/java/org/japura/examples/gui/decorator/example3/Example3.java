@@ -19,10 +19,11 @@ public class Example3 extends AbstractExample {
   @Override
   protected Component buildExampleComponent() {
     URL urlRefresh = ExampleImages.REFRESH_IMAGE;
+    URL urlHelp = ExampleImages.HELP_IMAGE;
+
     JButton refreshButton = new JButton(new ImageIcon(urlRefresh));
     refreshButton.setPreferredSize(new Dimension(22, 22));
 
-    URL urlHelp = ExampleImages.HELP_IMAGE;
     JButton helpButton = new JButton(new ImageIcon(urlHelp));
     helpButton.setPreferredSize(new Dimension(22, 22));
 
