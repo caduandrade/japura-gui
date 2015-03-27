@@ -43,7 +43,8 @@ public class Example1 {
     dialog.setDialogIcon(new ImageIcon(url));
     dialog.setMessageIcon(new ImageIcon(url));
 
-    dialog.show();
+    Integer result = dialog.show();
+    System.out.println(result);
   }
 
 }
