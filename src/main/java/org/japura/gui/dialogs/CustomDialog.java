@@ -89,7 +89,7 @@ public class CustomDialog {
     }
   }
 
-  public void addButton(String text) {
+  public int addButton(String text) {
     JButton button = new JButton();
     button.setText(text);
     final Integer pos = new Integer(this.buttons.size());
@@ -101,6 +101,7 @@ public class CustomDialog {
         fireButtonActions(pos.intValue(), e);
       }
     });
+    return pos.intValue();
   }
 
   public Integer show() {

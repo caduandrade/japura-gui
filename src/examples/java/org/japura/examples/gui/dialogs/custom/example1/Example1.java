@@ -19,18 +19,19 @@ public class Example1 {
 
     CustomDialog dialog = new CustomDialog(title, message);
 
-    dialog.addButton("button");
+    int buttonIndex = dialog.addButton("button");
 
     dialog.addContent(new LabelSeparator("separator"));
     dialog.addMessageBlock("second message block");
 
-    dialog.addButtonAction(0, new ActionListener() {
+    dialog.addButtonAction(buttonIndex, new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        System.out.println("!!");
+        System.out.println("action");
       }
     });
 
+    dialog.setDialogIcon(new ImageIcon(url));
     dialog.setMessageIcon(new ImageIcon(url));
 
     dialog.show();
