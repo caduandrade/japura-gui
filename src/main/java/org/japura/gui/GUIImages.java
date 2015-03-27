@@ -3,7 +3,7 @@ package org.japura.gui;
 import java.net.URL;
 
 /**
- * Copyright (C) 2008-2013 Carlos Eduardo Leite de Andrade
+ * Copyright (C) 2008-2015 Carlos Eduardo Leite de Andrade
  * <P>
  * This library is free software: you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -24,18 +24,26 @@ import java.net.URL;
  * 
  * @author Carlos Eduardo Leite de Andrade
  */
-public final class GUIImages{
+public final class GUIImages {
 
   public static final URL COLLAPSE_BLACK = GUIImages.class
-	  .getResource("/images/jpr_clp_black.png");
+    .getResource("/images/jpr_clp_black.png");
   public static final URL EXPAND_BLACK = GUIImages.class
-	  .getResource("/images/jpr_exp_black.png");
+    .getResource("/images/jpr_exp_black.png");
   public static final URL COLLAPSE_WHITE = GUIImages.class
-	  .getResource("/images/jpr_clp_white.png");
+    .getResource("/images/jpr_clp_white.png");
   public static final URL EXPAND_WHITE = GUIImages.class
-	  .getResource("/images/jpr_exp_white.png");
+    .getResource("/images/jpr_exp_white.png");
   public static final URL CALENDAR = GUIImages.class
-	  .getResource("/images/jpr_calendar.png");
+    .getResource("/images/jpr_calendar.png");
   public static final URL LINK_HAND = GUIImages.class
-	  .getResource("/images/jpr_link_hand.gif");
+    .getResource("/images/jpr_link_hand.gif");
+  public static final URL WARNING = GUIImages.class
+    .getResource("/images/jpr_alert.png");
+  public static final URL INFORMATION = GUIImages.class
+    .getResource("/images/jpr_info.png");
+  public static final URL ERROR = GUIImages.class
+    .getResource("/images/jpr_error.png");
+  public static final URL QUESTION = GUIImages.class
+    .getResource("/images/jpr_question.png");
 }

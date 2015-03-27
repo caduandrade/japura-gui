@@ -1,8 +1,13 @@
-package org.japura.gui.i18n;
+package org.japura.gui.dialogs;
+
+import javax.swing.BorderFactory;
+import javax.swing.JScrollPane;
+import java.awt.Component;
+import java.awt.Dimension;
 
 /**
  * <P>
- * Copyright (C) 2013-2015 Carlos Eduardo Leite de Andrade
+ * Copyright (C) 2015 Carlos Eduardo Leite de Andrade
  * <P>
  * This library is free software: you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -20,26 +25,26 @@ package org.japura.gui.i18n;
  * <P>
  * For more information, contact: <A HREF="www.japura.org">www.japura.org</A>
  * <P>
- * 
+ *
  * @author Carlos Eduardo Leite de Andrade
  */
-public enum GUIStringKeys {
+class MessageScrollPane extends JScrollPane {
 
-  CALENDAR_WINDOW_TITLE,
-  SELECT_ALL,
-  DESELECT_ALL,
-  SELECT_DESELECT_ALL,
-  YES,
-  NO,
-  CLOSE;
+  private static final long serialVersionUID = 1L;
+
+  public MessageScrollPane(Component view) {
+    super(view);
+    getViewport().setOpaque(false);
+    setOpaque(false);
+    setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+  }
 
   @Override
-  public String toString() {
-    return getKey();
+  public Dimension getPreferredSize() {
+    Dimension dim = super.getPreferredSize();
+    if (isPreferredSizeSet() == false) {
+      dim.height = Math.min(dim.height, 150);
+    }
+    return dim;
   }
-
-  public String getKey() {
-    return "japura.gui." + name().toLowerCase();
-  }
-
 }

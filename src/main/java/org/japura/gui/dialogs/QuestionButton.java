@@ -1,8 +1,8 @@
-package org.japura.gui.i18n;
+package org.japura.gui.dialogs;
 
 /**
  * <P>
- * Copyright (C) 2013-2015 Carlos Eduardo Leite de Andrade
+ * Copyright (C) 2015 Carlos Eduardo Leite de Andrade
  * <P>
  * This library is free software: you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -20,26 +20,21 @@ package org.japura.gui.i18n;
  * <P>
  * For more information, contact: <A HREF="www.japura.org">www.japura.org</A>
  * <P>
- * 
+ *
  * @author Carlos Eduardo Leite de Andrade
  */
-public enum GUIStringKeys {
+public enum QuestionButton {
 
-  CALENDAR_WINDOW_TITLE,
-  SELECT_ALL,
-  DESELECT_ALL,
-  SELECT_DESELECT_ALL,
-  YES,
-  NO,
-  CLOSE;
+  YES(0),
+  NO(1);
 
-  @Override
-  public String toString() {
-    return getKey();
+  private final int index;
+
+  QuestionButton(int index) {
+    this.index = index;
   }
 
-  public String getKey() {
-    return "japura.gui." + name().toLowerCase();
+  int getIndex() {
+    return index;
   }
-
 }

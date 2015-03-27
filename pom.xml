@@ -8,7 +8,7 @@
 
 	<groupId>org.japura</groupId>
 	<artifactId>japura-gui</artifactId>
-	<version>7.0.3-SNAPSHOT</version>
+	<version>7.1.0</version>
 	<packaging>jar</packaging>
 
 	<parent>
@@ -62,7 +62,7 @@
 		<dependency>
 			<groupId>org.japura</groupId>
 			<artifactId>japura-util</artifactId>
-			<version>7.0.0</version>
+			<version>7.1.0</version>
 		</dependency>
 
 		<dependency>
