@@ -11,7 +11,7 @@ public class Example1 {
     String title = DialogTexts.TITLE;
     String message = DialogTexts.MESSAGE;
 
-    // default text buttons
+    // default text of the buttons
     I18nAdapter.getAdapter().registerHandler(new DefaultGUIHandlerString());
 
     ErrorDialog.show(title, message);

@@ -17,7 +17,7 @@ public class Example5 {
     String title = "Buy";
     String message = "Thank you for purchasing";
 
-    // default text buttons
+    // default text of the buttons
     I18nAdapter.getAdapter().registerHandler(new DefaultGUIHandlerString());
 
     // changing the default icons for all dialogs

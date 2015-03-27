@@ -13,7 +13,7 @@ public class Example2 {
     String message = DialogTexts.TITLE;
     String detailedMessage = DialogTexts.MESSAGE;
 
-    // default text buttons
+    // default text of the buttons
     I18nAdapter.getAdapter().registerHandler(new DefaultGUIHandlerString());
 
     InformationDialog dialog = new InformationDialog(title, message);
