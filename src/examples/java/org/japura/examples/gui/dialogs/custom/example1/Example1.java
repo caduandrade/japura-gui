@@ -6,6 +6,7 @@ import org.japura.gui.LabelSeparator;
 import org.japura.gui.dialogs.CustomDialog;
 
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
@@ -19,15 +20,23 @@ public class Example1 {
 
     CustomDialog dialog = new CustomDialog(title, message);
 
-    int buttonIndex = dialog.addButton("button");
+    int button1Index = dialog.addButton("button 1");
+    int button2Index = dialog.addButton("button 2");
 
     dialog.addContent(new LabelSeparator("separator"));
+    dialog.addContent(new JCheckBox("checkbox"));
     dialog.addMessageBlock("second message block");
 
-    dialog.addButtonAction(buttonIndex, new ActionListener() {
+    dialog.addButtonAction(button1Index, new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-        System.out.println("action");
+        System.out.println("action 1");
+      }
+    });
+    dialog.addButtonAction(button2Index, new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        System.out.println("action 2");
       }
     });
 
