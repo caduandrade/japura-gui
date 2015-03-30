@@ -57,13 +57,12 @@ public class QuestionDialog extends AbstractBasicDialog {
     return QuestionDialog.defaultMessageIcon;
   }
 
-  public static QuestionDialogResult show(Window owner, String title,
-    String message) {
+  public static QuestionButton show(Window owner, String title, String message) {
     QuestionDialog dialog = new QuestionDialog(title, message);
     return dialog.show(owner);
   }
 
-  public static QuestionDialogResult show(String title, String message) {
+  public static QuestionButton show(String title, String message) {
     QuestionDialog dialog = new QuestionDialog(title, message);
     return dialog.show();
   }
@@ -92,20 +91,20 @@ public class QuestionDialog extends AbstractBasicDialog {
     return this.dialog;
   }
 
-  public QuestionDialogResult show() {
+  public QuestionButton show() {
     return show(null);
   }
 
-  public QuestionDialogResult show(Window owner) {
+  public QuestionButton show(Window owner) {
     Integer result = getDialog().show();
     if (result == null) {
-      return QuestionDialogResult.CANCEL;
+      return QuestionButton.NO;
     }
     if (QuestionButton.YES.getIndex() == result.intValue()) {
-      return QuestionDialogResult.YES;
+      return QuestionButton.YES;
     }
     if (QuestionButton.NO.getIndex() == result.intValue()) {
-      return QuestionDialogResult.NO;
+      return QuestionButton.NO;
     }
     throw new RuntimeException("Unknow result: " + result);
   }
