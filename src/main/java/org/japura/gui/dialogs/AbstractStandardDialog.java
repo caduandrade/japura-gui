@@ -3,6 +3,7 @@ package org.japura.gui.dialogs;
 import org.japura.gui.i18n.GUIStringKeys;
 import org.japura.util.i18n.I18nAdapter;
 
+import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionListener;
 
@@ -54,6 +55,10 @@ public abstract class AbstractStandardDialog extends AbstractBasicDialog {
 
   public void show() {
     getDialog().show();
+  }
+
+  public void show(Component owner) {
+    getDialog().show(owner);
   }
 
   public void show(Window owner) {

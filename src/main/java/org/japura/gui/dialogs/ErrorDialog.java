@@ -4,6 +4,7 @@ import org.japura.gui.GUIImages;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import java.awt.Component;
 import java.awt.Window;
 
 /**
@@ -57,6 +58,11 @@ public class ErrorDialog extends AbstractStandardDialog {
   public static void show(String title, String message) {
     ErrorDialog dialog = new ErrorDialog(title, message);
     dialog.show();
+  }
+
+  public static void show(Component component, String title, String message) {
+    ErrorDialog dialog = new ErrorDialog(title, message);
+    dialog.show(component);
   }
 
   public static void show(Window owner, String title, String message) {

@@ -6,6 +6,8 @@ import org.japura.util.i18n.I18nAdapter;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.SwingUtilities;
+import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionListener;
 
@@ -57,6 +59,11 @@ public class QuestionDialog extends AbstractBasicDialog {
     return QuestionDialog.defaultMessageIcon;
   }
 
+  public static boolean show(Component owner, String title, String message) {
+    QuestionDialog dialog = new QuestionDialog(title, message);
+    return dialog.show(owner);
+  }
+
   public static boolean show(Window owner, String title, String message) {
     QuestionDialog dialog = new QuestionDialog(title, message);
     return dialog.show(owner);
@@ -105,8 +112,16 @@ public class QuestionDialog extends AbstractBasicDialog {
     return show(null);
   }
 
+  public boolean show(Component owner) {
+    Window window = null;
+    if (owner != null) {
+      window = SwingUtilities.getWindowAncestor(owner);
+    }
+    return show(window);
+  }
+
   public boolean show(Window owner) {
-    Integer result = getDialog().show();
+    Integer result = getDialog().show(owner);
     if (result == null) {
       result = new Integer(getDefaultButtonForDispose().getIndex());
     }

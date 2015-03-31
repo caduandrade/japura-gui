@@ -4,6 +4,7 @@ import org.japura.gui.GUIImages;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import java.awt.Component;
 import java.awt.Window;
 
 /**
@@ -52,6 +53,11 @@ public class WarningDialog extends AbstractStandardDialog {
 
   public static Icon getDefaultMessageIcon() {
     return WarningDialog.defaultMessageIcon;
+  }
+
+  public static void show(Component owner, String title, String message) {
+    WarningDialog dialog = new WarningDialog(title, message);
+    dialog.show(owner);
   }
 
   public static void show(Window owner, String title, String message) {

@@ -110,6 +110,14 @@ public class CustomDialog {
     return show(null);
   }
 
+  public Integer show(Component owner) {
+    Window window = null;
+    if (owner != null) {
+      window = SwingUtilities.getWindowAncestor(owner);
+    }
+    return show(window);
+  }
+
   public Integer show(Window owner) {
     buildDialog();
 
