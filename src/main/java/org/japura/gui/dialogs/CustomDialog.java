@@ -48,6 +48,7 @@ public class CustomDialog {
     return CustomDialog.defaultDialogIcon;
   }
 
+  private Integer defaultButtonForDispose;
   private Integer result;
   private Integer focusedButton;
   private JDialog dialog;
@@ -82,6 +83,14 @@ public class CustomDialog {
     if (CustomDialog.getDefaultDialogIcon() != null) {
       setDialogIcon(CustomDialog.getDefaultDialogIcon());
     }
+  }
+
+  public void setDefaultButtonForDispose(Integer button) {
+    this.defaultButtonForDispose = button;
+  }
+
+  public Integer getDefaultButtonForDispose() {
+    return defaultButtonForDispose;
   }
 
   private JDialog getDialog() {
@@ -274,7 +283,13 @@ public class CustomDialog {
 
       @Override
       public void windowClosing(WindowEvent e) {
-        setResult(null);
+        Integer index = getDefaultButtonForDispose();
+        if (index != null && buttons.containsKey(index)) {
+          setResult(index);
+        }
+        else {
+          setResult(null);
+        }
         getDialog().dispose();
       }
     });
