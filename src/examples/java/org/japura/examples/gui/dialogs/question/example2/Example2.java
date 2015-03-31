@@ -2,7 +2,6 @@ package org.japura.examples.gui.dialogs.question.example2;
 
 import org.japura.gui.dialogs.QuestionButton;
 import org.japura.gui.dialogs.QuestionDialog;
-import org.japura.gui.dialogs.QuestionDialogResult;
 
 import javax.swing.JTextField;
 import java.awt.event.KeyAdapter;
@@ -30,7 +29,7 @@ public class Example2 {
     dialog.setButtonText(QuestionButton.YES, "Confirm");
     dialog.setButtonEnabled(QuestionButton.YES, false);
 
-    QuestionDialogResult result = dialog.show();
+    QuestionButton result = dialog.show();
     String text = field.getText();
     System.out.println(result);
     System.out.println(text);

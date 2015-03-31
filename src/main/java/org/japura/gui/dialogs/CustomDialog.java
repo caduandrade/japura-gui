@@ -1,6 +1,7 @@
 package org.japura.gui.dialogs;
 
 import net.miginfocom.swing.MigLayout;
+import org.japura.gui.WrapLabel;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
@@ -93,6 +94,7 @@ public class CustomDialog {
     JButton button = new JButton();
     button.setText(text);
     final Integer pos = new Integer(this.buttons.size());
+    button.setName(pos.toString());
     this.buttons.put(pos, button);
     this.buttonActions.put(pos, new ArrayList<ActionListener>());
     button.addActionListener(new ActionListener() {
@@ -215,7 +217,12 @@ public class CustomDialog {
       panel.add(iconPanel, BorderLayout.WEST);
     }
 
-    panel.add(new MessageScrollPane(new ContentPanel(this.contents)));
+    JScrollPane sp = new JScrollPane(new ContentPanel(this.contents));
+    sp.getViewport().setOpaque(false);
+    sp.setOpaque(false);
+    sp.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+    panel.add(sp);
 
     ButtonsPanel buttonsPanel = new ButtonsPanel();
     for (int i = 0; i < this.buttons.size(); i++) {
@@ -249,16 +256,6 @@ public class CustomDialog {
     });
   }
 
-  protected JTextArea buildTextArea() {
-    JTextArea textArea = new JTextArea(0, 35);
-    textArea.setWrapStyleWord(true);
-    textArea.setEditable(false);
-    textArea.setOpaque(false);
-    textArea.setLineWrap(true);
-
-    return textArea;
-  }
-
   public void addContent(Component content) {
     addContent(content, defaultGap);
   }
@@ -272,8 +269,8 @@ public class CustomDialog {
   }
 
   public void addMessageBlock(String message, int topMargin) {
-    JTextArea textArea = buildTextArea();
-    textArea.setText(message);
-    addContent(textArea, topMargin);
+    WrapLabel wrapLabel = new WrapLabel(message);
+    wrapLabel.setWrapWidth(450);
+    addContent(wrapLabel, topMargin);
   }
 }

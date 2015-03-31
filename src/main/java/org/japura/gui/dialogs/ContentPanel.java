@@ -55,7 +55,11 @@ class ContentPanel extends JPanel implements Scrollable {
 
   @Override
   public Dimension getPreferredScrollableViewportSize() {
-    return getPreferredSize();
+    Dimension dim = getPreferredSize();
+    if (isPreferredSizeSet() == false) {
+      dim.height = Math.min(dim.height, 150);
+    }
+    return dim;
   }
 
   @Override
