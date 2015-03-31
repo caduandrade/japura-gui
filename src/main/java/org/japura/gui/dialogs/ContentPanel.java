@@ -84,4 +84,12 @@ class ContentPanel extends JPanel implements Scrollable {
     return false;
   }
 
+  @Override
+  public Dimension getPreferredSize() {
+    Dimension dim = super.getPreferredSize();
+    if (isPreferredSizeSet() == false) {
+      dim.width = Math.max(dim.width, 300);
+    }
+    return dim;
+  }
 }

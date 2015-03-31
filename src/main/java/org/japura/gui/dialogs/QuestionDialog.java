@@ -57,19 +57,21 @@ public class QuestionDialog extends AbstractBasicDialog {
     return QuestionDialog.defaultMessageIcon;
   }
 
-  public static QuestionButton show(Window owner, String title, String message) {
+  public static boolean show(Window owner, String title, String message) {
     QuestionDialog dialog = new QuestionDialog(title, message);
     return dialog.show(owner);
   }
 
-  public static QuestionButton show(String title, String message) {
+  public static boolean show(String title, String message) {
     QuestionDialog dialog = new QuestionDialog(title, message);
     return dialog.show();
   }
 
   private CustomDialog dialog;
+  private QuestionButton defaultButtonForDispose;
 
   public QuestionDialog(String title, String message) {
+    this.defaultButtonForDispose = QuestionButton.NO;
     this.dialog = new CustomDialog(title, message);
 
     this.dialog.addButton(I18nAdapter.getAdapter().getString(
@@ -86,25 +88,33 @@ public class QuestionDialog extends AbstractBasicDialog {
     }
   }
 
+  public void setDefaultButtonForDispose(QuestionButton button) {
+    this.defaultButtonForDispose = button;
+  }
+
+  public QuestionButton getDefaultButtonForDispose() {
+    return defaultButtonForDispose;
+  }
+
   @Override
   protected CustomDialog getDialog() {
     return this.dialog;
   }
 
-  public QuestionButton show() {
+  public boolean show() {
     return show(null);
   }
 
-  public QuestionButton show(Window owner) {
+  public boolean show(Window owner) {
     Integer result = getDialog().show();
     if (result == null) {
-      return QuestionButton.NO;
+      result = new Integer(getDefaultButtonForDispose().getIndex());
     }
     if (QuestionButton.YES.getIndex() == result.intValue()) {
-      return QuestionButton.YES;
+      return true;
     }
     if (QuestionButton.NO.getIndex() == result.intValue()) {
-      return QuestionButton.NO;
+      return false;
     }
     throw new RuntimeException("Unknow result: " + result);
   }

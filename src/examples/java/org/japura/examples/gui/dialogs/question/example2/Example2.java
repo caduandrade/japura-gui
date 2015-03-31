@@ -29,7 +29,7 @@ public class Example2 {
     dialog.setButtonText(QuestionButton.YES, "Confirm");
     dialog.setButtonEnabled(QuestionButton.YES, false);
 
-    QuestionButton result = dialog.show();
+    boolean result = dialog.show();
     String text = field.getText();
     System.out.println(result);
     System.out.println(text);
