@@ -36,6 +36,18 @@ import java.util.*;
  */
 public class CustomDialog {
 
+  private static Icon defaultDialogIcon;
+
+  public static void setDefaultDialogIcon(Icon icon) {
+    if (icon != null) {
+      CustomDialog.defaultDialogIcon = icon;
+    }
+  }
+
+  public static Icon getDefaultDialogIcon() {
+    return CustomDialog.defaultDialogIcon;
+  }
+
   private Integer result;
   private Integer focusedButton;
   private JDialog dialog;
@@ -65,6 +77,10 @@ public class CustomDialog {
 
     if (message != null) {
       addMessageBlock(message);
+    }
+
+    if (CustomDialog.getDefaultDialogIcon() != null) {
+      setDialogIcon(CustomDialog.getDefaultDialogIcon());
     }
   }
 
