@@ -1,24 +1,14 @@
 package org.japura.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.LayoutManager;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import javax.swing.BorderFactory;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
+import javax.swing.*;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 import javax.swing.event.MenuKeyEvent;
 import javax.swing.event.MenuKeyListener;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.LayoutManager;
+import java.awt.event.*;
 
 /**
  * <P>
@@ -243,17 +233,25 @@ public abstract class AbstractComboBox extends JComponent{
 	return popup;
   }
 
-  private class ComboBox extends JComboBox{
+  private class ComboBox extends JComboBox {
 
-	private static final long serialVersionUID = 10000012219553L;
+    private static final long serialVersionUID = 2L;
 
-	@Override
-	public void processKeyEvent(KeyEvent e) {
-	  if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-		AbstractComboBox.this.setPopupVisible(true);
-	  }
-	  super.processKeyEvent(e);
-	}
+    public ComboBox() {
+      getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
+        KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, false), "none");
+      getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
+        KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, false), "none");
+      for (KeyListener l : getKeyListeners()) {
+        removeKeyListener(l);
+      }
+    }
+
+    /*
+     * @Override public void processKeyEvent(KeyEvent e) { if (e.getKeyCode() ==
+     * KeyEvent.VK_DOWN) { AbstractComboBox.this.setPopupVisible(true); } else {
+     * super.processKeyEvent(e); } }
+     */
   }
 
   protected class Popup extends JPopupMenu{
