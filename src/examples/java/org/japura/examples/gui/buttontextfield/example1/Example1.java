@@ -6,18 +6,19 @@ import org.japura.gui.ButtonTextField;
 import org.japura.gui.event.ButtonTextFieldEvent;
 import org.japura.gui.event.ButtonTextFieldListener;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 
 public class Example1 extends AbstractExample {
 
   @Override
   protected Component buildExampleComponent() {
-    URL urlSortIncrease = ExampleImages.SORT_INCREASE_IMAGE;
-    URL urlSortDecrease = ExampleImages.SORT_DECREASE_IMAGE;
-    URL urlFind = ExampleImages.FIND_IMAGE;
+    Icon sortIncreaseIcon = new ImageIcon(ExampleImages.SORT_INCREASE_IMAGE);
+    Icon sortDecreaseIcon = new ImageIcon(ExampleImages.SORT_DECREASE_IMAGE);
+    Icon findIcon = new ImageIcon(ExampleImages.FIND_IMAGE);
 
     ActionListener actionListener = new ActionListener() {
       @Override
@@ -27,9 +28,9 @@ public class Example1 extends AbstractExample {
     };
 
     ButtonTextField field = new ButtonTextField(10);
-    field.addButton("Increase", urlSortIncrease, actionListener);
-    field.addButton("Decrease", urlSortDecrease, actionListener);
-    field.setFixedIcon(urlFind);
+    field.addButton("Increase", sortIncreaseIcon, actionListener);
+    field.addButton("Decrease", sortDecreaseIcon, actionListener);
+    field.setFixedIcon(findIcon);
 
     field.addButtonTextFieldListener(new ButtonTextFieldListener() {
       @Override

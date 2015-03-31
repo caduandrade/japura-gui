@@ -4,16 +4,17 @@ import org.japura.examples.gui.AbstractExample;
 import org.japura.examples.gui.ExampleImages;
 import org.japura.gui.ButtonTextField;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 
 public class Example3 extends AbstractExample {
 
   @Override
   protected Component buildExampleComponent() {
-    URL urlFind = ExampleImages.FIND_IMAGE;
+    Icon findIcon = new ImageIcon(ExampleImages.FIND_IMAGE);
 
     ActionListener actionListener = new ActionListener() {
       @Override
@@ -23,7 +24,7 @@ public class Example3 extends AbstractExample {
     };
 
     ButtonTextField field = new ButtonTextField(10);
-    field.addButton("Find", urlFind, actionListener);
+    field.addButton("Find", findIcon, actionListener);
     field.setDropDownVisible(false);
 
     return field;

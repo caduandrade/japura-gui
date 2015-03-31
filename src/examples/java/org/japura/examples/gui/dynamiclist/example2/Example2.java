@@ -6,17 +6,18 @@ import org.japura.examples.gui.ExampleImages;
 import org.japura.gui.ButtonTextField;
 import org.japura.gui.DynamicList;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import java.awt.Component;
-import java.net.URL;
 import java.util.List;
 
 public class Example2 extends AbstractExample {
 
   @Override
   protected Component buildExampleComponent() {
-    URL uFind = ExampleImages.FIND_IMAGE;
+    Icon findIcon = new ImageIcon(ExampleImages.FIND_IMAGE);
     ButtonTextField field = new ButtonTextField(10);
-    field.addButton("Find", uFind, null);
+    field.addButton("Find", findIcon, null);
     field.setDropDownVisible(false);
 
     List<String> list = Country.getCountries();

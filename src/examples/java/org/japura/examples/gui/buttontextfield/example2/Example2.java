@@ -4,17 +4,18 @@ import org.japura.examples.gui.AbstractExample;
 import org.japura.examples.gui.ExampleImages;
 import org.japura.gui.ButtonTextField;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 
 public class Example2 extends AbstractExample {
 
   @Override
   protected Component buildExampleComponent() {
-    URL urlSortIncrease = ExampleImages.SORT_INCREASE_IMAGE;
-    URL urlSortDecrease = ExampleImages.SORT_DECREASE_IMAGE;
+    Icon sortIncreaseIcon = new ImageIcon(ExampleImages.SORT_INCREASE_IMAGE);
+    Icon sortDecreaseIcon = new ImageIcon(ExampleImages.SORT_DECREASE_IMAGE);
 
     ActionListener actionListener = new ActionListener() {
       @Override
@@ -24,8 +25,8 @@ public class Example2 extends AbstractExample {
     };
 
     ButtonTextField field = new ButtonTextField(10);
-    field.addButton("Increase", urlSortIncrease, actionListener);
-    field.addButton("Decrease", urlSortDecrease, actionListener);
+    field.addButton("Increase", sortIncreaseIcon, actionListener);
+    field.addButton("Decrease", sortDecreaseIcon, actionListener);
     field.setSelectedDropDownIconVisible(false);
 
     return field;

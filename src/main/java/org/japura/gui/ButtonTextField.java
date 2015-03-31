@@ -1,47 +1,24 @@
 package org.japura.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.net.URL;
-import java.util.LinkedHashMap;
+import org.japura.gui.event.ButtonTextFieldEvent;
+import org.japura.gui.event.ButtonTextFieldListener;
 
-import javax.swing.BorderFactory;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.CaretListener;
 import javax.swing.event.EventListenerList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.text.Document;
-
-import org.japura.gui.event.ButtonTextFieldEvent;
-import org.japura.gui.event.ButtonTextFieldListener;
+import java.awt.*;
+import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.net.URL;
+import java.util.LinkedHashMap;
 
 /**
- * Copyright (C) 2010-2013 Carlos Eduardo Leite de Andrade
+ * Copyright (C) 2010-2015 Carlos Eduardo Leite de Andrade
  * <P>
  * This library is free software: you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -82,7 +59,7 @@ public class ButtonTextField extends JPanel{
   private JList actionsList;
   private ListRenderer listRenderer;
 
-  private URL fixedIcon;
+  private Icon fixedIcon;
   private int maxWidth;
   private int maxHeight;
 
@@ -172,18 +149,18 @@ public class ButtonTextField extends JPanel{
 	getField().setMargin(new Insets(0, marginGap, 0, marginGap));
   }
 
-  public URL getFixedIcon() {
+  public Icon getFixedIcon() {
 	return fixedIcon;
   }
 
-  public void setFixedIcon(URL fixedIcon) {
+  public void setFixedIcon(Icon fixedIcon) {
 	this.fixedIcon = fixedIcon;
 	if (getFixedIcon() != null) {
-	  getIcon().setIcon(new ImageIcon(getFixedIcon()));
+	  getIcon().setIcon(getFixedIcon());
 	} else {
 	  if (icon != null) {
 		Action action = actions.get(currentButton);
-		ImageIcon icon = action.getIcon();
+        Icon icon = action.getIcon();
 		getIcon().setIcon(icon);
 	  } else {
 		getIcon().setIcon(null);
@@ -365,7 +342,7 @@ public class ButtonTextField extends JPanel{
 	addButton(buttonName, null, listener);
   }
 
-  public void addButton(String buttonName, URL icon, ActionListener listener) {
+  public void addButton(String buttonName, Icon icon, ActionListener listener) {
 	Action action = new Action(listener, icon);
 	actions.put(buttonName, action);
 	getListModel().addElement(buttonName);
@@ -432,7 +409,7 @@ public class ButtonTextField extends JPanel{
 	  }
 
 	  this.currentButton = buttonName;
-	  ImageIcon icon = action.getIcon();
+      Icon icon = action.getIcon();
 	  if (icon != null) {
 		getSelectedDropDownIcon().setIcon(icon);
 	  } else {
@@ -589,12 +566,12 @@ public class ButtonTextField extends JPanel{
 
   private static class Action{
 	private ActionListener listener;
-	private ImageIcon icon;
+	private Icon icon;
 
-	public Action(ActionListener listener, URL urlIcon) {
+	public Action(ActionListener listener, Icon icon) {
 	  this.listener = listener;
-	  if (urlIcon != null) {
-		this.icon = new ImageIcon(urlIcon);
+	  if (icon != null) {
+		this.icon = icon;
 	  }
 	}
 
@@ -602,7 +579,7 @@ public class ButtonTextField extends JPanel{
 	  return listener;
 	}
 
-	protected ImageIcon getIcon() {
+	protected Icon getIcon() {
 	  return icon;
 	}
 
