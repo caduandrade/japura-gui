@@ -1,10 +1,10 @@
-package org.japura.examples.gui.dynamiclist.example2;
+package org.japura.examples.gui.dropdownfilteredlist.example2;
 
 import org.japura.examples.gui.AbstractExample;
 import org.japura.examples.gui.Country;
 import org.japura.examples.gui.ExampleImages;
 import org.japura.gui.ButtonTextField;
-import org.japura.gui.DynamicList;
+import org.japura.gui.DropDownFilteredList;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -16,12 +16,12 @@ public class Example2 extends AbstractExample {
   @Override
   protected Component buildExampleComponent() {
     Icon findIcon = new ImageIcon(ExampleImages.FIND_IMAGE);
-    ButtonTextField field = new ButtonTextField(10);
+    ButtonTextField field = new ButtonTextField(20);
     field.addButton("Find", findIcon, null);
     field.setDropDownVisible(false);
 
     List<String> list = Country.getCountries();
-    new DynamicList<String>(field, list);
+    new DropDownFilteredList<String>(field, list);
 
     return field;
   }
