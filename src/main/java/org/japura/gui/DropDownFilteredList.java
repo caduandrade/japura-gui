@@ -1,10 +1,9 @@
 package org.japura.gui;
 
-import org.japura.gui.renderer.HighlightCellRenderer;
-
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -43,7 +42,7 @@ public class DropDownFilteredList<T> {
   private JComponent invoker;
   private JTextField field;
   private JPanel root;
-  private JList list;
+  private FilteredList<T> list;
   private DefaultListModel model;
   private List<T> items;
   private boolean caseSensitive;
@@ -71,7 +70,6 @@ public class DropDownFilteredList<T> {
   private void init(JTextField field, List<T> items, boolean caseSensitive) {
     this.field = field;
     this.caseSensitive = caseSensitive;
-    setCellRenderer(new HighlightCellRenderer(caseSensitive));
 
     field.getDocument().addDocumentListener(new DocumentListener() {
       @Override
@@ -128,6 +126,14 @@ public class DropDownFilteredList<T> {
     setItems(items);
   }
 
+  public void setMaxListWidth(int width) {
+    getList().setMaxWidth(width);
+  }
+
+  public int getMaxListWidth() {
+    return getList().getMaxWidth();
+  }
+
   public void setItems(List<T> items) {
     this.items = items;
     getPopup().setVisible(false);
@@ -145,7 +151,6 @@ public class DropDownFilteredList<T> {
     getList().setCellRenderer(cellRenderer);
   }
 
-  @SuppressWarnings("unchecked")
   private void chooseSelectedListItem() {
     if (getList().getSelectedIndex() > -1) {
       T item = (T) getList().getSelectedValue();
@@ -182,11 +187,6 @@ public class DropDownFilteredList<T> {
     if (caseSensitive == false) {
       typedText = typedText.toLowerCase();
     }
-    if (getCellRenderer() instanceof HighlightCellRenderer) {
-      HighlightCellRenderer renderer =
-        (HighlightCellRenderer) getCellRenderer();
-      renderer.setHighlightText(typedText);
-    }
     model = new DefaultListModel();
     for (T item : items) {
       String text = item.toString();
@@ -208,9 +208,9 @@ public class DropDownFilteredList<T> {
     }
   }
 
-  private JList getList() {
+  private FilteredList getList() {
     if (list == null) {
-      list = new JList();
+      list = new FilteredList();
       list.setBorder(BorderFactory.createEmptyBorder(1, 3, 1, 3));
       list.addKeyListener(new KeyAdapter() {
         @Override
@@ -231,6 +231,29 @@ public class DropDownFilteredList<T> {
       });
     }
     return list;
+  }
+
+  private static class FilteredList<T> extends JList<T> {
+
+    private int maxWidth = 300;
+
+    public void setMaxWidth(int maxWidth) {
+      this.maxWidth = Math.max(1, maxWidth);
+    }
+
+    public int getMaxWidth() {
+      return maxWidth;
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+      Dimension dim = super.getPreferredSize();
+      if (isPreferredSizeSet()) {
+        return dim;
+      }
+      dim.width = Math.min(dim.width, getMaxWidth());
+      return dim;
+    }
   }
 
 }
