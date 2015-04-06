@@ -1,7 +1,7 @@
 package org.japura.examples.gui.highlightcellrenderer.example1;
 
 import org.japura.examples.gui.AbstractExample;
-import org.japura.examples.gui.Country;
+import org.japura.examples.gui.CountryNames;
 import org.japura.gui.renderer.HighlightCellRenderer;
 
 import javax.swing.DefaultListModel;
@@ -16,7 +16,7 @@ public class Example1 extends AbstractExample {
   protected Component buildExampleComponent() {
     JList list = new JList();
     DefaultListModel model = new DefaultListModel();
-    List<String> countries = Country.getCountries();
+    List<String> countries = CountryNames.getCountries();
     for (String country : countries) {
       model.addElement(country);
     }

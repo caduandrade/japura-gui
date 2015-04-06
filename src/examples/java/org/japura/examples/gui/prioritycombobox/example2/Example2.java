@@ -4,7 +4,7 @@ import java.awt.Component;
 import java.util.List;
 
 import org.japura.examples.gui.AbstractExample;
-import org.japura.examples.gui.Country;
+import org.japura.examples.gui.CountryNames;
 import org.japura.gui.PriorityComboBox;
 import org.japura.gui.model.PriorityComboBoxModel;
 
@@ -16,7 +16,7 @@ public class Example2 extends AbstractExample {
 
 	PriorityComboBoxModel model = combo.getModel();
 
-	List<String> countries = Country.getCountries();
+	List<String> countries = CountryNames.getCountries();
 	for (String country : countries) {
 	  model.addElement(country);
 	}

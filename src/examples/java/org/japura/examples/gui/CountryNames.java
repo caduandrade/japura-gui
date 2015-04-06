@@ -8,11 +8,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Country {
+public class CountryNames {
 
   public static List<String> getCountries() {
     List<String> list = new ArrayList<String>();
-    Class<?> cls = Country.class;
+    Class<?> cls = CountryNames.class;
     URL url = cls.getResource("/countries.txt");
     BufferedReader reader = null;
 

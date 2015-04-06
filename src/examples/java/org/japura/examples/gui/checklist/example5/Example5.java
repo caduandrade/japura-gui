@@ -1,7 +1,7 @@
 package org.japura.examples.gui.checklist.example5;
 
 import org.japura.examples.gui.AbstractExample;
-import org.japura.examples.gui.Country;
+import org.japura.examples.gui.CountryNames;
 import org.japura.gui.CheckList;
 import org.japura.gui.model.DefaultListCheckModel;
 import org.japura.gui.model.ListCheckModel;
@@ -14,7 +14,7 @@ public class Example5 extends AbstractExample {
 
   @Override
   protected Component buildExampleComponent() {
-	List<String> countries = Country.getCountries();
+	List<String> countries = CountryNames.getCountries();
 
 	CheckList checkList = new CheckList();
 	checkList.setDragEnabled(true);

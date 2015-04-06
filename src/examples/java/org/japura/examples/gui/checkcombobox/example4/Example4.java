@@ -1,7 +1,7 @@
 package org.japura.examples.gui.checkcombobox.example4;
 
 import org.japura.examples.gui.AbstractExample;
-import org.japura.examples.gui.Country;
+import org.japura.examples.gui.CountryNames;
 import org.japura.gui.CheckComboBox;
 import org.japura.gui.event.ListCheckListener;
 import org.japura.gui.event.ListEvent;
@@ -15,7 +15,7 @@ public class Example4 extends AbstractExample {
 
   @Override
   protected Component buildExampleComponent() {
-	List<String> countries = Country.getCountries();
+	List<String> countries = CountryNames.getCountries();
 
 	CheckComboBox ccb = new CheckComboBox();
 	

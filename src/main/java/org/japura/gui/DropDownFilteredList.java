@@ -3,12 +3,15 @@ package org.japura.gui;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -38,6 +41,7 @@ import java.util.List;
  */
 public class DropDownFilteredList<T> {
 
+  private ValueToString<T> valueToString;
   private JPopupMenu popup;
   private JComponent invoker;
   private JTextField field;
@@ -46,6 +50,7 @@ public class DropDownFilteredList<T> {
   private DefaultListModel model;
   private List<T> items;
   private boolean caseSensitive;
+  private List<DropDownFilteredListListener> listeners;
 
   public DropDownFilteredList(ButtonTextField buttonField, List<T> items) {
     this(buttonField, items, false);
@@ -68,6 +73,8 @@ public class DropDownFilteredList<T> {
   }
 
   private void init(JTextField field, List<T> items, boolean caseSensitive) {
+    this.listeners = new ArrayList<>();
+    this.valueToString = new DefaultValueToString<>();
     this.field = field;
     this.caseSensitive = caseSensitive;
 
@@ -91,7 +98,7 @@ public class DropDownFilteredList<T> {
     field.addKeyListener(new KeyAdapter() {
       @Override
       public void keyReleased(KeyEvent e) {
-        if (model.size() == 0) {
+        if (model.size() == 0 || e.getKeyCode() == KeyEvent.VK_ENTER) {
           getPopup().setVisible(false);
         }
         else if (getPopup().isVisible() == false) {
@@ -126,6 +133,32 @@ public class DropDownFilteredList<T> {
     setItems(items);
   }
 
+  public void setValueToString(ValueToString<T> valueToString) {
+    if (valueToString != null) {
+      this.valueToString = valueToString;
+    }
+  }
+
+  public ValueToString<T> getValueToString() {
+    return valueToString;
+  }
+
+  public void addListener(DropDownFilteredListListener listener) {
+    if (listener != null) {
+      this.listeners.add(listener);
+    }
+  }
+
+  public void removeListener(DropDownFilteredListListener listener) {
+    if (listener != null) {
+      this.listeners.remove(listener);
+    }
+  }
+
+  public List<DropDownFilteredListListener> getListeners() {
+    return Collections.unmodifiableList(listeners);
+  }
+
   public void setMaxListWidth(int width) {
     getList().setMaxWidth(width);
   }
@@ -154,8 +187,12 @@ public class DropDownFilteredList<T> {
   private void chooseSelectedListItem() {
     if (getList().getSelectedIndex() > -1) {
       T item = (T) getList().getSelectedValue();
-      getField().setText(item.toString());
+      String text = getValueToString().valueToString(item);
+      getField().setText(text);
       getPopup().setVisible(false);
+      for (DropDownFilteredListListener listener : getListeners()) {
+        listener.itemSelected(text);
+      }
     }
   }
 
@@ -189,9 +226,10 @@ public class DropDownFilteredList<T> {
     }
     model = new DefaultListModel();
     for (T item : items) {
-      String text = item.toString();
-      if (caseSensitive == false)
+      String text = getValueToString().valueToString(item);
+      if (caseSensitive == false) {
         text = text.toLowerCase();
+      }
       if (text.length() == 0 || text.indexOf(typedText) > -1) {
         model.addElement(item);
       }
@@ -211,6 +249,7 @@ public class DropDownFilteredList<T> {
   private FilteredList getList() {
     if (list == null) {
       list = new FilteredList();
+      list.setCellRenderer(new ListRenderer());
       list.setBorder(BorderFactory.createEmptyBorder(1, 3, 1, 3));
       list.addKeyListener(new KeyAdapter() {
         @Override
@@ -253,6 +292,17 @@ public class DropDownFilteredList<T> {
       }
       dim.width = Math.min(dim.width, getMaxWidth());
       return dim;
+    }
+  }
+
+  private class ListRenderer extends DefaultListCellRenderer {
+    @Override
+    public Component getListCellRendererComponent(JList<?> list, Object value,
+      int index, boolean isSelected, boolean cellHasFocus) {
+      T item = (T) value;
+      String text = getValueToString().valueToString(item);
+      return super.getListCellRendererComponent(list, text, index, isSelected,
+        cellHasFocus);
     }
   }
 

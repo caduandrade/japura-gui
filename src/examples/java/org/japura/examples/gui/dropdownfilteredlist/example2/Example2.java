@@ -1,7 +1,7 @@
 package org.japura.examples.gui.dropdownfilteredlist.example2;
 
 import org.japura.examples.gui.AbstractExample;
-import org.japura.examples.gui.Country;
+import org.japura.examples.gui.CountryNames;
 import org.japura.examples.gui.ExampleImages;
 import org.japura.gui.ButtonTextField;
 import org.japura.gui.DropDownFilteredList;
@@ -15,13 +15,14 @@ public class Example2 extends AbstractExample {
 
   @Override
   protected Component buildExampleComponent() {
+    List<String> list = CountryNames.getCountries();
+
     Icon findIcon = new ImageIcon(ExampleImages.FIND_IMAGE);
     ButtonTextField field = new ButtonTextField(20);
     field.addButton("Find", findIcon, null);
     field.setDropDownVisible(false);
 
-    List<String> list = Country.getCountries();
-    new DropDownFilteredList<String>(field, list);
+    new DropDownFilteredList<>(field, list);
 
     return field;
   }
