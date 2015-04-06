@@ -16,13 +16,13 @@ public class Example2 extends AbstractExample {
   @Override
   protected Component buildExampleComponent() {
     List<String> list = CountryNames.getCountries();
-
     Icon findIcon = new ImageIcon(ExampleImages.FIND_IMAGE);
+
     ButtonTextField field = new ButtonTextField(20);
     field.addButton("Find", findIcon, null);
     field.setDropDownVisible(false);
 
-    new DropDownFilteredList<>(field, list);
+    new DropDownFilteredList<String>(field, list);
 
     return field;
   }

@@ -15,7 +15,7 @@ public class Example1 extends AbstractExample {
     List<String> list = CountryNames.getCountries();
 
     JTextField field = new JTextField(20);
-    new DropDownFilteredList(field, list);
+    new DropDownFilteredList<String>(field, list);
 
     return field;
   }

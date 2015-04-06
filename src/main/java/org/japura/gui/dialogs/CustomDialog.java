@@ -116,10 +116,15 @@ public class CustomDialog {
   }
 
   public int addButton(String text) {
+    for (JButton otherButton : this.buttons.values()) {
+      if (otherButton.getText().equals(text)) {
+        throw new IllegalArgumentException("Button already exists: " + text);
+      }
+    }
     JButton button = new JButton();
     button.setText(text);
     final Integer pos = new Integer(this.buttons.size());
-    button.setName(pos.toString());
+    button.setName(text);
     this.buttons.put(pos, button);
     this.buttonActions.put(pos, new ArrayList<ActionListener>());
     button.addActionListener(new ActionListener() {
