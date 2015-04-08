@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -46,11 +47,12 @@ public class DropDownFilteredList<T> {
   private JComponent invoker;
   private JTextField field;
   private JPanel root;
-  private FilteredList<T> list;
+  private DropDownList<T> list;
   private DefaultListModel model;
-  private List<T> items;
+  private Collection<T> items;
   private boolean caseSensitive;
   private List<DropDownFilteredListListener> listeners;
+  private int maxVisibleRowCount = 10;
 
   public DropDownFilteredList(ButtonTextField buttonField, List<T> items) {
     this(buttonField, items, false);
@@ -133,6 +135,14 @@ public class DropDownFilteredList<T> {
     setItems(items);
   }
 
+  public int getMaxVisibleRowCount() {
+    return maxVisibleRowCount;
+  }
+
+  public void setMaxVisibleRowCount(int count) {
+    this.maxVisibleRowCount = Math.max(1, count);
+  }
+
   public void setValueToString(ValueToString<T> valueToString) {
     if (valueToString != null) {
       this.valueToString = valueToString;
@@ -159,21 +169,12 @@ public class DropDownFilteredList<T> {
     return Collections.unmodifiableList(listeners);
   }
 
-  public void setMaxListWidth(int width) {
-    getList().setMaxWidth(width);
-  }
-
-  public int getMaxListWidth() {
-    return getList().getMaxWidth();
-  }
-
-  public void setItems(List<T> items) {
+  public void setItems(Collection<T> items) {
     this.items = items;
     getPopup().setVisible(false);
     rebuildModel();
-    getRoot().setPreferredSize(null);
-    getRoot().setPreferredSize(getRoot().getPreferredSize());
-    getPopup().pack();
+    int rows = Math.min(items.size(), getMaxVisibleRowCount());
+    getList().setVisibleRowCount(rows);
   }
 
   public ListCellRenderer getCellRenderer() {
@@ -242,13 +243,18 @@ public class DropDownFilteredList<T> {
       rebuildModel();
     }
     if (model.getSize() > 0) {
+
+      getPopup().setPreferredSize(null);
+      Dimension dim = getPopup().getPreferredSize();
+      dim.width = this.field.getWidth();
+      getPopup().setPreferredSize(dim);
       getPopup().show(invoker, 0, invoker.getHeight());
     }
   }
 
-  private FilteredList getList() {
+  private DropDownList<T> getList() {
     if (list == null) {
-      list = new FilteredList();
+      list = new DropDownList();
       list.setCellRenderer(new ListRenderer());
       list.setBorder(BorderFactory.createEmptyBorder(1, 3, 1, 3));
       list.addKeyListener(new KeyAdapter() {
@@ -272,26 +278,10 @@ public class DropDownFilteredList<T> {
     return list;
   }
 
-  private static class FilteredList<T> extends JList<T> {
-
-    private int maxWidth = 300;
-
-    public void setMaxWidth(int maxWidth) {
-      this.maxWidth = Math.max(1, maxWidth);
-    }
-
-    public int getMaxWidth() {
-      return maxWidth;
-    }
-
+  private class DropDownList<E> extends JList<E> {
     @Override
-    public Dimension getPreferredSize() {
-      Dimension dim = super.getPreferredSize();
-      if (isPreferredSizeSet()) {
-        return dim;
-      }
-      dim.width = Math.min(dim.width, getMaxWidth());
-      return dim;
+    public boolean getScrollableTracksViewportWidth() {
+      return true;
     }
   }
 
