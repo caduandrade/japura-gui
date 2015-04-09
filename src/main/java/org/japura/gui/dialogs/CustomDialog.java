@@ -1,14 +1,17 @@
 package org.japura.gui.dialogs;
 
-import net.miginfocom.swing.MigLayout;
 import org.japura.gui.WrapLabel;
 
-import javax.swing.*;
-import java.awt.BorderLayout;
+import javax.swing.Icon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.SwingUtilities;
 import java.awt.Component;
 import java.awt.Window;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.*;
 
 /**
@@ -48,7 +51,7 @@ public class CustomDialog {
     return CustomDialog.defaultDialogIcon;
   }
 
-  private Integer defaultButtonForDispose;
+  private Integer defaultButtonForDialogClose;
   private Integer result;
   private Integer focusedButton;
   private JDialog dialog;
@@ -59,7 +62,7 @@ public class CustomDialog {
   private LinkedHashMap<Component, Integer> contents;
   private int defaultGap = 7;
 
-  private String title;
+  private final String title;
   private Icon dialogIcon;
   private Icon messageIcon;
 
@@ -85,12 +88,16 @@ public class CustomDialog {
     }
   }
 
-  public void setDefaultButtonForDispose(Integer button) {
-    this.defaultButtonForDispose = button;
+  public String getTitle() {
+    return title;
   }
 
-  public Integer getDefaultButtonForDispose() {
-    return defaultButtonForDispose;
+  public void setDefaultButtonForDialogClose(Integer button) {
+    this.defaultButtonForDialogClose = button;
+  }
+
+  public Integer getDefaultButtonForDialogClose() {
+    return defaultButtonForDialogClose;
   }
 
   private JDialog getDialog() {
@@ -101,8 +108,20 @@ public class CustomDialog {
     this.dialogIcon = dialogIcon;
   }
 
+  public Icon getDialogIcon() {
+    return dialogIcon;
+  }
+
+  public Icon getMessageIcon() {
+    return messageIcon;
+  }
+
   public void setMessageIcon(Icon messageIcon) {
     this.messageIcon = messageIcon;
+  }
+
+  public LinkedHashMap<Component, Integer> getContents() {
+    return new LinkedHashMap(contents);
   }
 
   private void fireButtonActions(int button, ActionEvent e) {
@@ -149,7 +168,7 @@ public class CustomDialog {
   }
 
   public Integer show(Window owner) {
-    buildDialog();
+    this.dialog = DialogBuilder.getDefaultDialogBuilder().buildDialog(this);
 
     getDialog().pack();
     getDialog().setLocationRelativeTo(owner);
@@ -162,7 +181,11 @@ public class CustomDialog {
     this.result = result;
   }
 
-  private JButton getButton(int buttonIndex) {
+  public int getButtonsCount() {
+    return this.buttons.size();
+  }
+
+  public JButton getButton(int buttonIndex) {
     Integer index = new Integer(buttonIndex);
     return this.buttons.get(index);
   }
@@ -228,87 +251,6 @@ public class CustomDialog {
     if (list != null) {
       list.add(actionListener);
     }
-  }
-
-  protected void buildDialog() {
-    dialog = new JDialog();
-
-    ActionListener escListener = new ActionListener() {
-      @Override
-      public void actionPerformed(ActionEvent e) {
-        dialog.dispose();
-      }
-    };
-
-    dialog.getRootPane().registerKeyboardAction(escListener,
-      KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
-      JComponent.WHEN_IN_FOCUSED_WINDOW);
-
-    dialog.setTitle(title);
-
-    JPanel panel = new JPanel();
-    panel.setLayout(new BorderLayout(0, 0));
-    panel.setOpaque(false);
-
-    if (dialogIcon != null) {
-      BufferedImage image =
-        new BufferedImage(dialogIcon.getIconWidth(),
-          dialogIcon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
-      dialogIcon.paintIcon(null, image.getGraphics(), 0, 0);
-      dialog.setIconImage(image);
-    }
-
-    if (messageIcon != null) {
-      JPanel iconPanel = new JPanel();
-      iconPanel.setOpaque(false);
-      iconPanel.setLayout(new MigLayout("ins 5 5 5 0"));
-      iconPanel.add(new JLabel(messageIcon));
-      panel.add(iconPanel, BorderLayout.WEST);
-    }
-
-    JScrollPane sp = new JScrollPane(new ContentPanel(this.contents));
-    sp.getViewport().setOpaque(false);
-    sp.setOpaque(false);
-    sp.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-
-    panel.add(sp);
-
-    ButtonsPanel buttonsPanel = new ButtonsPanel();
-    for (int i = 0; i < this.buttons.size(); i++) {
-      JButton button = this.buttons.get(new Integer(i));
-      buttonsPanel.add(button);
-    }
-
-    panel.add(buttonsPanel, BorderLayout.SOUTH);
-
-    dialog.add(panel);
-    dialog.setModal(true);
-    dialog.setResizable(false);
-
-    this.dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-    this.dialog.addWindowListener(new WindowAdapter() {
-      @Override
-      public void windowOpened(WindowEvent e) {
-        if (getFocusedButton() != null) {
-          JButton button = getButton(getFocusedButton().intValue());
-          if (button != null) {
-            button.requestFocus();
-          }
-        }
-      }
-
-      @Override
-      public void windowClosing(WindowEvent e) {
-        Integer index = getDefaultButtonForDispose();
-        if (index != null && buttons.containsKey(index)) {
-          setResult(index);
-        }
-        else {
-          setResult(null);
-        }
-        getDialog().dispose();
-      }
-    });
   }
 
   public void addContent(Component content) {

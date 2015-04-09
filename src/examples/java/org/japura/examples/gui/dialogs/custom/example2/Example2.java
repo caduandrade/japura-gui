@@ -14,7 +14,7 @@ public class Example2 {
     int button1Index = dialog.addButton("button 1");
     dialog.addButton("button 2");
 
-    dialog.setDefaultButtonForDispose(button1Index);
+    dialog.setDefaultButtonForDialogClose(button1Index);
 
     Integer result = dialog.show();
     System.out.println(result);
