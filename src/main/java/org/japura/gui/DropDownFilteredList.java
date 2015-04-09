@@ -246,7 +246,7 @@ public class DropDownFilteredList<T> {
 
       getPopup().setPreferredSize(null);
       Dimension dim = getPopup().getPreferredSize();
-      dim.width = this.field.getWidth();
+      dim.width = this.invoker.getWidth();
       getPopup().setPreferredSize(dim);
       getPopup().show(invoker, 0, invoker.getHeight());
     }
