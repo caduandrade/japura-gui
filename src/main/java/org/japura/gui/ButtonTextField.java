@@ -338,8 +338,18 @@ public class ButtonTextField extends JPanel{
 	return actionsList;
   }
 
+  @Override
+  public Color getForeground() {
+    return getField().getForeground();
+  }
+
+  @Override
+  public void setForeground(Color fg) {
+    getField().setForeground(fg);
+  }
+
   public void addButton(String buttonName, ActionListener listener) {
-	addButton(buttonName, null, listener);
+    addButton(buttonName, null, listener);
   }
 
   public void addButton(String buttonName, Icon icon, ActionListener listener) {
