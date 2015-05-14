@@ -53,6 +53,7 @@ public class DropDownFilteredList<T> {
   private boolean caseSensitive;
   private List<DropDownFilteredListListener> listeners;
   private int maxVisibleRowCount = 10;
+  private Filter filter = new DefaultFilter();
 
   public DropDownFilteredList(ButtonTextField buttonField, List<T> items) {
     this(buttonField, items, false);
@@ -133,6 +134,16 @@ public class DropDownFilteredList<T> {
       }
     });
     setItems(items);
+  }
+
+  public void setFilter(Filter filter) {
+    if (filter != null) {
+      this.filter = filter;
+    }
+  }
+
+  public Filter getFilter() {
+    return filter;
   }
 
   public int getMaxVisibleRowCount() {
@@ -231,7 +242,7 @@ public class DropDownFilteredList<T> {
       if (caseSensitive == false) {
         text = text.toLowerCase();
       }
-      if (text.length() == 0 || text.indexOf(typedText) > -1) {
+      if (getFilter().matches(text, typedText)) {
         model.addElement(item);
       }
     }
@@ -293,6 +304,21 @@ public class DropDownFilteredList<T> {
       String text = getValueToString().valueToString(item);
       return super.getListCellRendererComponent(list, text, index, isSelected,
         cellHasFocus);
+    }
+  }
+
+  public static interface Filter {
+
+    public boolean matches(String itemText, String typedText);
+  }
+
+  public static class DefaultFilter implements Filter {
+    @Override
+    public boolean matches(String itemText, String typedText) {
+      if (itemText.length() == 0 || itemText.indexOf(typedText) > -1) {
+        return true;
+      }
+      return false;
     }
   }
 
