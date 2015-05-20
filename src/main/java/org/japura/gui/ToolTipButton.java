@@ -284,12 +284,12 @@ public class ToolTipButton extends JPanel {
     tooltipLabel.setForeground(getForeground());
     tooltipLabel.setFont(ToolTipButton.this.getFont());
     tooltipLabel.setText(text);
-    tooltipLabel.setOpaque(false);
 
     JPanel panel = new JPanel();
     panel.setBackground(toolTipBackground);
     panel.setLayout(new BorderLayout());
     panel.add(tooltipLabel, BorderLayout.CENTER);
+
 
     if (extraComponent != null && extraComponentAnchor != null) {
       if (extraComponentAnchor.equals(ToolTipButtonAnchor.SOUTH)) {
@@ -347,6 +347,8 @@ public class ToolTipButton extends JPanel {
       setOpaque(false);
       setEditable(false);
       setHighlighter(null);
+      setBorder(null);
+      setBackground(new Color(0, 0, 0, 0));
     }
 
     private void setHTMLFont(Font font) {
