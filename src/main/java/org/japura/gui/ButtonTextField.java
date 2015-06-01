@@ -63,6 +63,8 @@ public class ButtonTextField extends JPanel{
   private int maxWidth;
   private int maxHeight;
 
+  private Cursor iconCursor = new Cursor(Cursor.HAND_CURSOR);
+            
   private static int marginGap = 3;
 
   public ButtonTextField(String text) {
@@ -398,27 +400,35 @@ public class ButtonTextField extends JPanel{
   }
 
   public void setCurrentButton(String buttonName) {
-	Action action = actions.get(buttonName);
-	if (action != null) {
-	  ButtonTextFieldEvent event =
-		  new ButtonTextFieldEvent(currentButton, buttonName,
-			  System.currentTimeMillis());
-	  for (ButtonTextFieldListener l : listeners
-		  .getListeners(ButtonTextFieldListener.class)) {
-		l.buttonChanged(event);
-	  }
+    Action action = actions.get(buttonName);
+    if (action != null) {
+      ButtonTextFieldEvent event =
+        new ButtonTextFieldEvent(currentButton, buttonName,
+          System.currentTimeMillis());
+      for (ButtonTextFieldListener l : listeners
+        .getListeners(ButtonTextFieldListener.class)) {
+        l.buttonChanged(event);
+      }
 
-	  this.currentButton = buttonName;
+      this.currentButton = buttonName;
       Icon icon = action.getIcon();
-	  if (icon != null) {
-		getSelectedDropDownIcon().setIcon(icon);
-	  } else {
-		getSelectedDropDownIcon().setIcon(null);
-	  }
-	  if (getFixedIcon() == null) {
-		getIcon().setIcon(icon);
-	  }
-	}
+      if (icon != null) {
+        getSelectedDropDownIcon().setIcon(icon);
+      }
+      else {
+        getSelectedDropDownIcon().setIcon(null);
+      }
+      if (getFixedIcon() == null) {
+        getIcon().setIcon(icon);
+      }
+
+      if (action.getListener() != null) {
+        getIcon().setCursor(getIconCursor());
+      }
+      else {
+        getIcon().setCursor(null);
+      }
+    }
   }
 
   public String getCurrentButtonName() {
@@ -428,7 +438,6 @@ public class ButtonTextField extends JPanel{
   private IconLabel getIcon() {
 	if (icon == null) {
 	  icon = new IconLabel(true);
-	  icon.setCursor(new Cursor(Cursor.HAND_CURSOR));
 	  icon.setBorder(BorderFactory.createEmptyBorder(2, 0, 2, 2));
 	  icon.setBackground(field.getBackground());
 	  icon.setOpaque(true);
@@ -443,10 +452,16 @@ public class ButtonTextField extends JPanel{
   }
 
   public void setIconCursor(Cursor cursor) {
-	getIcon().setCursor(cursor);
+    if (cursor != null) {
+      getIcon().setCursor(cursor);
+    }
   }
 
-  @Override
+  public Cursor getIconCursor() {
+    return iconCursor;
+  }
+
+    @Override
   public void setBackground(Color background) {
 	super.setBackground(background);
 	if (field != null) {
