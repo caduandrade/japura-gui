@@ -8,7 +8,7 @@
 
 	<groupId>org.japura</groupId>
 	<artifactId>japura-gui</artifactId>
-	<version>7.5.1-SNAPSHOT</version>
+	<version>7.5.1</version>
 	<packaging>jar</packaging>
 
 	<parent>
