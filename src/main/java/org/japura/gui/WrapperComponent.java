@@ -57,6 +57,16 @@ class WrapperComponent extends JLayeredPane implements MouseListener{
   public Dimension getPreferredSize() {
 	return component.getPreferredSize();
   }
+  
+  @Override
+  public Dimension getMinimumSize() {
+	return component.getMinimumSize();
+  }
+  
+  @Override
+  public Dimension getMaximumSize() {
+	return component.getMaximumSize();
+  }  
 
   @Override
   public void setEnabled(boolean enabled) {
@@ -67,8 +77,15 @@ class WrapperComponent extends JLayeredPane implements MouseListener{
 
   @Override
   public void doLayout() {
-	component.setBounds(0, 0, getWidth(), getHeight());
-	filterPanel.setBounds(0, 0, getWidth(), getHeight());
+	// the main layouting is inspired from the BorderLayout
+	Insets insets = getInsets();
+	int top = insets.top;
+	int bottom = this.getHeight() - insets.bottom;
+	int left = insets.left;
+	int right = this.getWidth() - insets.right;
+  
+	component.setBounds(0, 0, right - left, bottom - top);
+	filterPanel.setBounds(0, 0, right - left, bottom - top);
   }
 
   @Override
