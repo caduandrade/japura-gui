@@ -84,8 +84,8 @@ class WrapperComponent extends JLayeredPane implements MouseListener{
 	int left = insets.left;
 	int right = this.getWidth() - insets.right;
   
-	component.setBounds(0, 0, right - left, bottom - top);
-	filterPanel.setBounds(0, 0, right - left, bottom - top);
+	component.setBounds(left, top, right - left, bottom - top);
+	filterPanel.setBounds(left, top, right - left, bottom - top);
   }
 
   @Override
