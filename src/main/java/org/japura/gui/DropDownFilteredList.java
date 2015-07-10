@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 
+ *
  * <P>
  * Copyright (C) 2010-2015 Carlos Eduardo Leite de Andrade
  * <P>
@@ -36,9 +36,9 @@ import java.util.List;
  * <P>
  * For more information, contact: <A HREF="www.japura.org">www.japura.org</A>
  * <P>
- * 
+ *
  * @author Carlos Eduardo Leite de Andrade
- * 
+ *
  */
 public class DropDownFilteredList<T> {
 
@@ -99,41 +99,61 @@ public class DropDownFilteredList<T> {
     });
 
     field.addKeyListener(new KeyAdapter() {
+
+      @Override
+      public void keyTyped(KeyEvent e) {
+        keyListenerAction(e);
+      }
+
+      @Override
+      public void keyPressed(KeyEvent e) {
+        keyListenerAction(e);
+      }
+
       @Override
       public void keyReleased(KeyEvent e) {
-        if (model.size() == 0 || e.getKeyCode() == KeyEvent.VK_ENTER) {
-          getPopup().setVisible(false);
-        }
-        else if (getPopup().isVisible() == false) {
-          showList();
-        }
-
-        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-          if (getList().getSelectedIndex() == -1 && model.size() > 0) {
-            getList().setSelectedIndex(0);
-          }
-
-          SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-              getList().requestFocus();
-            }
-          });
-        }
-        else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-          getPopup().setVisible(false);
-        }
-        else {
-          SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-              getField().requestFocus();
-            }
-          });
-        }
+        keyListenerAction(e);
       }
+
     });
     setItems(items);
+  }
+
+  private void keyListenerAction(KeyEvent e) {
+    if (model.size() == 0 || e.getKeyCode() == KeyEvent.VK_ENTER) {
+      getPopup().setVisible(false);
+    }
+    else if (getPopup().isVisible() == false) {
+      showList();
+    }
+
+    if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_UP) {
+      e.consume();
+    }
+
+    if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+      if (getList().getSelectedIndex() == -1 && model.size() > 0) {
+        getList().setSelectedIndex(0);
+      }
+
+      SwingUtilities.invokeLater(new Runnable() {
+        @Override
+        public void run() {
+          getList().requestFocus();
+        }
+      });
+    }
+    else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+      getPopup().setVisible(false);
+    }
+    else {
+      SwingUtilities.invokeLater(new Runnable() {
+        @Override
+        public void run() {
+          getField().requestFocus();
+        }
+      });
+    }
   }
 
   public void setFilter(Filter filter) {
